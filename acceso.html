@@ -172,19 +172,5 @@
 		  mostrarModal("Credenciales incorrectas");
 		}
 	</script>
-
-	<script>
-		window.addEventListener("DOMContentLoaded", () => {
-		  console.log("URL:", window.location.href);
-
-		  const params = new URLSearchParams(window.location.search);
-		  console.log("error param:", params.get("error"));
-
-		  if (params.get("error")) {
-			console.log("Mostrando modal");
-			mostrarModal("Credenciales incorrectas");
-		  }
-		});
-	</script>	
 </body>
 </html>
