@@ -129,76 +129,62 @@
 
 <body>
 
-<div class="marco">
-  <h1>Acceso</h1>
+	<div class="marco">
+	  <h1>Acceso</h1>
 
-  <!-- ⚠️ SIN action -->
-  <form id="mrc-acceso">
-    <input type="text" id="jugador" name="jugador" placeholder="Jugador" required>
-    <input type="password" id="clave" name="clave" placeholder="Código" required>
-    <button type="submit">Entrar</button>
-  </form>
-</div>
+	  <!-- ⚠️ SIN action -->
+	  <form method="POST" action="https://script.google.com/macros/s/AKfycbxG0-TddGcYraqw7FaVklnnSTw6Z-GMh0D7FX5F7WEsHbztk6i118RLJbj0SXA3RYb0vA/exec">
+		<input type="text" id="jugador" name="jugador" placeholder="Jugador" required>
+		<input type="password" id="clave" name="clave" placeholder="Código" required>
+		<button type="submit">Entrar</button>
+	  </form>
+	</div>
 
-<!-- MODAL -->
-<div id="modal" class="modal hidden">
-  <div class="modal-box">
-    <h2 id="modal-title">Aviso</h2>
-    <p id="modal-text"></p>
-    <button onclick="cerrarModal()">Aceptar</button>
-  </div>
-</div>
+	<!-- MODAL -->
+	<div id="modal" class="modal hidden">
+	  <div class="modal-box">
+		<h2 id="modal-title">Aviso</h2>
+		<p id="modal-text"></p>
+		<button onclick="cerrarModal()">Aceptar</button>
+	  </div>
+	</div>
 
-<script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxG0-TddGcYraqw7FaVklnnSTw6Z-GMh0D7FX5F7WEsHbztk6i118RLJbj0SXA3RYb0vA/exec";
+	<form method="POST" action="TU_SCRIPT_URL">
 
-const form = document.getElementById('mrc-acceso');
 
-form.addEventListener('submit', async (event) => {
-  event.preventDefault();
+	<script> //MODAL
+		function mostrarModal(texto, titulo = 'Aviso') {
+			console.log(texto);
+			document.getElementById('modal-title').textContent = titulo;
+			document.getElementById('modal-text').textContent = texto;
+			document.getElementById('modal').classList.remove('hidden');
+		}
 
-  const jugador = document.getElementById('jugador').value;
-  const clave = document.getElementById('clave').value;
+		function cerrarModal() {
+		  document.getElementById('modal').classList.add('hidden');
+		}
+	</script>
+	
+	<script>
+		const params = new URLSearchParams(window.location.search);
 
-  try {
-		const response = await fetch(SCRIPT_URL, {
-		  method: "POST",
-		  headers: {
-		    "Content-Type": "application/x-www-form-urlencoded"
-		  },
-		  body: `jugador=${jugador}&clave=${clave}`
+		if (params.get("error")) {
+		  mostrarModal("Credenciales incorrectas");
+		}
+	</script>
+
+	<script>
+		window.addEventListener("DOMContentLoaded", () => {
+		  console.log("URL:", window.location.href);
+
+		  const params = new URLSearchParams(window.location.search);
+		  console.log("error param:", params.get("error"));
+
+		  if (params.get("error")) {
+			console.log("Mostrando modal");
+			mostrarModal("Credenciales incorrectas");
+		  }
 		});
-    });
-
-    const data = await response.json();
-
-    if (!data.ok) {
-      mostrarModal('Credenciales incorrectas');
-    } else {
-      localStorage.setItem('jugador', jugador);
-      localStorage.setItem('equipo', data.equipo);
-
-      mostrarModal('Credenciales correctas');
-
-      setTimeout(() => {
-        window.location.href = jugador === "admin" ? "admin.html" : "cofre.html";
-      }, 1000);
-    }
-
-  } catch (err) {
-    mostrarModal('Error: ' + err.message);
-  }
-});
-
-function mostrarModal(texto) {
-  document.getElementById('modal-text').textContent = texto;
-  document.getElementById('modal').classList.remove('hidden');
-}
-
-function cerrarModal() {
-  document.getElementById('modal').classList.add('hidden');
-}
-</script>
-
+	</script>	
 </body>
 </html>
