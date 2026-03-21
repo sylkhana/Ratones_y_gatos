@@ -134,7 +134,8 @@
 
 	  <!-- ⚠️ SIN action -->
 	  <form method="POST" action="https://script.google.com/macros/s/AKfycbxG0-TddGcYraqw7FaVklnnSTw6Z-GMh0D7FX5F7WEsHbztk6i118RLJbj0SXA3RYb0vA/exec">
-		<input type="text" id="jugador" name="jugador" placeholder="Jugador" required>
+		<input type="hidden" name="accion" value="entrar">
+	    <input type="text" id="jugador" name="jugador" placeholder="Jugador" required>
 		<input type="password" id="clave" name="clave" placeholder="Código" required>
 		<button type="submit">Entrar</button>
 	  </form>
