@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Gymkhana Ratones y Gatos - Raton</title>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+	<style>
+		* {
+		  box-sizing: border-box;
+		  margin: 0;
+		  padding: 0;
+		}
+		
+		:root {
+		  --color-intenso: #ffff;
+		  --color-suave: #ffff;
+		}		
+
+		body {
+		  font-family: 'Roboto', sans-serif;
+		  background: linear-gradient(to right, #FF7F27, #22B14C);
+		  min-height: 100vh;
+		  display: flex;
+		  justify-content: center;
+		  align-items: center;
+		  padding: 1rem;
+		}
+
+		.marcoblanco {
+		  background: #fff;
+		  width: 90%;
+		  max-width: 400px;
+		  padding: 2rem;
+		  border-radius: 1rem;
+		  box-shadow: 0 1rem 2rem rgba(0,0,0,0.2);
+		  text-align: center;
+		}
+
+		.bm { /*Bloque intenso*/
+		  background: var(--color-intenso);
+		  color: white;
+		  padding: 1rem;
+		  border-radius: 0.8rem;
+		  margin-bottom: 1.5rem;
+		  font-size: 1.5rem;
+		}
+
+		.bl {/*Bloque suave*/
+		  padding: 1rem;
+		  border-radius: 0.8rem;
+		  margin-bottom: 1rem;
+		  text-align: center;
+		  background: var(--color-suave);
+		  border-left: 5px solid var(--color-intenso);
+		  border-right: 5px solid var(--color-intenso);
+		  font-size: 1.2rem;
+		  font-weight: 700;
+		  line-height: 0.5;
+		}
+		
+		.bg { /*Bloque gris*/
+		  background: #f5f5f5;
+		  border-radius: 0.6rem;
+		  padding: 0.6rem;
+		  margin-bottom: 1.5rem;
+		  font-size: 0.9rem;
+		}	
+
+		.tm{ /*Texto intenso*/
+		  margin-bottom: 1rem;
+		  font-weight: 700;
+		  color: var(--color-intenso);
+		}
+
+		
+		.t { /* Texto normal */
+		}
+
+		.input {/* Input */
+		  width: 100%;
+		  padding: 0.8rem 1rem;
+		  margin-bottom: 1rem;
+		  font-size: 1rem;
+		  border: 1px solid #ccc;
+		  border-radius: 0.5rem;
+		  transition: border-color 0.3s;
+		}
+		
+		.input:focus {
+		  border-color: #FFF200;
+		  outline: none;
+		}	
+
+		.btn {/* Botón intenso */
+		  width: 100%;
+		  margin-top: 1rem;
+		  padding: 0.8rem;
+		  border: none;
+		  border-radius: 0.5rem;
+		  background: var(--color-intenso);
+		  color: white;
+		  font-weight: 700;
+		  cursor: pointer;
+		}
+
+		.btn:hover {/* Cambio de color del btn al pasar el cursor*/
+		  background: #FFF200;
+		}
+		
+		img {
+		  max-width: 100%;
+		  height: auto;
+		  display: block;
+		}
+				
+		/* Tabla responsive */
+		.tabla-wrapper {
+		  width: 100%;
+		  overflow-x: auto;
+		  margin-top: 1.5rem;
+		}
+
+		table {
+		  width: 100%;
+		  max-width: 420px;
+		  border-collapse: collapse;
+		}
+
+		th, td {
+		  border: 1px solid #ccc;
+		  padding: 0.5rem;
+		  text-align: center;
+		  font-size: 0.95rem;
+		}
+
+		th {
+		  background: var(--color-intenso);
+		  font-weight: 700;
+		}	
+		
+		.fondo_amarillo {
+		  background-color: #fff8cc;
+		}
+
+		.fondo_lima {
+		  background-color: #d4f8d4;
+		}
+
+		.fondo_verde {
+		  background-color: #a8e6a3;
+		}
+
+		.fondo_rojo {
+		  background-color: #f8caca;
+		}		
+		
+		.columnas {
+		  display: flex;
+		  gap: 1rem;
+		  justify-content: center;
+		}	
+		/* Media queries para móviles muy pequeños */
+		@media (max-width: 350px) {
+		  .marco {
+			padding: 1rem;
+		  }
+		  .marco h1 {
+			font-size: 1.5rem;
+		  }
+		  .marco input, .marco button {
+			font-size: 0.9rem;
+			padding: 0.6rem;
+		  }
+		}
+
+		/*Mensajes modales de aviso*/
+		.modal {
+		  position: fixed;
+		  inset: 0;
+		  background: rgba(0,0,0,0.6);
+		  display: flex;
+		  justify-content: center;
+		  align-items: center;
+		  z-index: 9999;
+		}
+
+		.modal.hidden {
+		  display: none;
+		}
+
+		.modal-box {
+		  background: white;
+		  padding: 1.5rem;
+		  border-radius: 1rem;
+		  width: 90%;
+		  max-width: 400px;
+		  text-align: center;
+		  box-shadow: 0 1rem 2rem rgba(0,0,0,0.3);
+		}
+
+		.modal-box h2 {
+		  color: var(--color-intenso);
+		  margin-bottom: 1rem;
+		}
+
+		.modal-box button {
+		  margin-top: 1rem;
+		  padding: 0.6rem 1.2rem;
+		  background: var(--color-intenso);
+		  color: white;
+		  border: none;
+		  border-radius: 0.5rem;
+		  font-weight: 700;
+		}	
+	</style>	
+</head>
+
+<body>
+
+	<!-- MARCO BLANCO -->
+	<div class="marcoblanco">
+		<div class="bm" id="txt_equipo">EQUIPO</div>
+		<div class="bl">RATON</div>
+		<div class="tm">Entra en una ratonera:</div>
+		<table id="tabla_ratoneras">
+          <thead>
+            <tr>
+              <th>Ratonera</th>
+              <th>Estado</th>
+              <!-- <th>Puntos</th>-->
+            </tr>
+          </thead>
+          <tbody>
+      </table>
+    </form>
+
+	</div>
+
+	<!-- MODAL -->
+	<div id="modal" class="modal hidden">
+	  <div class="modal-box">
+		<h2 id="modal-title">Aviso</h2>
+		<p id="modal-text"></p>
+		<button onclick="cerrarModal()">Aceptar</button>
+	  </div>
+	</div>
+
+	<script> //BBDD 
+
+		//VER RATONERAS
+		async function verRatoneras() {
+			const res = await fetch("https://script.google.com/macros/s/AKfycbxG0-TddGcYraqw7FaVklnnSTw6Z-GMh0D7FX5F7WEsHbztk6i118RLJbj0SXA3RYb0vA/exec", {
+				method: "POST",
+				body: new URLSearchParams({
+					func: "verRatoneras",
+					equipo: equipo
+				})
+			});		
+			const data = await res.json();
+			
+			//Si hemos devuelto algún error (como que el raton no tiene color asignado) lo notificamos
+			if (data.mensaje){
+				window.destino = "raton.html"
+				mostrarModal(data.mensaje)
+			}
+			else {
+			
+				//Vinculamos el HTML de la tabla a una variable
+				const BodyTabla = document.querySelector('#tabla_ratoneras tbody');
+
+				//ALIMENTAR TABLA
+				BodyTabla.innerHTML = '';
+				data.forEach(
+					row => {
+						const tr = document.createElement('tr');
+						tr.innerHTML = '<td>' + row[0] + '</td><td>' + row[1] + '</td>';
+						
+						//asignar color según estado
+						switch (row[1]) {
+							case "Abierta":
+								tr.classList.add("fondo_amarillo");
+								break;
+							case "Abandonada":
+								tr.classList.add("fondo_lima");
+								break;
+							case "Vaciada":
+								tr.classList.add("fondo_verde");
+								break;
+							case "Cazados":
+								tr.classList.add("fondo_rojo");
+								break;
+						}					
+						tabla_ratoneras.appendChild(tr);			
+					}
+				)
+			}
+		}
+	
+	
+		//ABRRIR RATONERA
+		async function abrirRatonera (numRatonera) {
+			const res = await fetch("https://script.google.com/macros/s/AKfycbxG0-TddGcYraqw7FaVklnnSTw6Z-GMh0D7FX5F7WEsHbztk6i118RLJbj0SXA3RYb0vA/exec", {
+				method: "POST",
+				body: new URLSearchParams({
+					func: "abrirRatonera",
+					equipo: equipo,
+					jugador: jugador,
+					numRatonera: numRatonera
+				})
+			});				
+			const data = await res.json();
+			
+			//GUARDAMOS QUESITO y RATONERA EN EL ALMACEN		
+			sessionStorage.setItem('quesito', data.quesito)
+			sessionStorage.setItem('ratonera', equipo.substring(0, 1) + numRatonera.toString())
+			
+			//Comprobamos a donde hay que redireccionar
+			if (data.rol === "GATO") {
+				mostrarModal(data.mensaje)
+				window.destino = "gato.html";
+			} 
+			else  if (data.ratonera !== "0") {
+				//Redirigimos directamente a quesito o trampa segun estado del bloqueo
+				window.destino = (data.desbloqueado === "0") ? "trampa.html" : "quesito.html";					
+			}
+			
+			//Redireccionamos, pasando antes por el modal, si corressponde
+			if (data.mensaje !== ""){
+				
+				mostrarModal(data.mensaje)	
+			}
+			else {
+				//Redirigimos directamente
+				window.location.href = window.destino
+			}
+				
+			return;
+			
+		}		
+	
+	</script>
+	
+	<script> //MAIN
+	
+		//ALMACEN
+		const equipo = sessionStorage.getItem('equipo');
+		if (equipo === "NARANJA") {
+			document.documentElement.style.setProperty("--color-intenso", "#FF7F27");
+			document.documentElement.style.setProperty("--color-suave", "#F1BA72");
+		}
+		else {
+			document.documentElement.style.setProperty("--color-intenso", "#22B14C");
+			document.documentElement.style.setProperty("--color-suave", "#9EF7B3");
+		}
+		const jugador = sessionStorage.getItem('jugador');
+		
+		//PINTAR PERFIL
+		document.getElementById('txt_equipo').textContent = "Equipo " + equipo;
+		verRatoneras()
+	</script>
+	<script> //MODALES
+		function mostrarModal(texto, titulo = 'Aviso') {
+			document.getElementById('modal-title').textContent = titulo;
+			document.getElementById('modal-text').textContent = texto;
+			document.getElementById('modal').classList.remove('hidden');
+		}
+
+		function cerrarModal() {
+			document.getElementById('modal').classList.add('hidden');
+			
+			//Si había un destino guardado, redirigimos
+			if (window.destino) {window.location.href = window.destino;}
+		}
+	
+	</script>	
+	<script> //FUNCIONS LOCALES
+		//CLICK EN RATONERA
+		const tabla = document.getElementById('tabla_ratoneras');
+
+		tabla.addEventListener('click', (event) => {
+			const fila = event.target.closest('tr');
+
+			// Evita clicks en el header
+			if (!fila || fila.parentNode.tagName === 'THEAD') return;
+
+			const numRatonera = fila.cells[0].textContent;
+
+			abrirRatonera(numRatonera);
+		})
+	
+	</script>
+</body>
+</html>

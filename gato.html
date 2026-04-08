@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Gymkhana Ratones y Gatos - Gato</title>
+
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+	<style>
+		* {
+		  box-sizing: border-box;
+		  margin: 0;
+		  padding: 0;
+		}
+		
+		:root {
+		  --color-intenso: #ffff;
+		  --color-suave: #ffff;
+		}		
+
+		body {
+		  font-family: 'Roboto', sans-serif;
+		  background: linear-gradient(to right, #FF7F27, #22B14C);
+		  min-height: 100vh;
+		  display: flex;
+		  justify-content: center;
+		  align-items: center;
+		  padding: 1rem;
+		}
+
+		.hidden {
+		  display: none;
+		}
+		
+		.marcoblanco {
+		  background: #fff;
+		  width: 90%;
+		  max-width: 400px;
+		  padding: 2rem;
+		  border-radius: 1rem;
+		  box-shadow: 0 1rem 2rem rgba(0,0,0,0.2);
+		  text-align: center;
+		}
+
+		.bm { /*Bloque intenso*/
+		  background: var(--color-intenso);
+		  color: white;
+		  padding: 1rem;
+		  border-radius: 0.8rem;
+		  margin-bottom: 1.5rem;
+		  font-size: 1.5rem;
+		}
+
+		.bl {/*Bloque suave*/
+		  padding: 1rem;
+		  border-radius: 0.8rem;
+		  margin-bottom: 1rem;
+		  text-align: center;
+		  background: var(--color-suave);
+		  border-left: 5px solid var(--color-intenso);
+		  border-right: 5px solid var(--color-intenso);
+		  font-size: 1.2rem;
+		  font-weight: 700;
+		  line-height: 0.5;
+		}
+		
+		.bg { /*Bloque gris*/
+		  background: #f5f5f5;
+		  border-radius: 0.6rem;
+		  padding: 0.6rem;
+		  margin-bottom: 1.5rem;
+		  font-size: 0.9rem;
+		}	
+
+		.tm{ /*Texto intenso*/
+		  margin-bottom: 1rem;
+		  font-weight: 700;
+		  color: var(--color-intenso);
+		}
+
+		
+		.t { /* Texto normal */
+		}
+
+		.input {/* Input */
+		  width: 100%;
+		  padding: 0.8rem 1rem;
+		  margin-bottom: 1rem;
+		  font-size: 1rem;
+		  border: 1px solid #ccc;
+		  border-radius: 0.5rem;
+		  transition: border-color 0.3s;
+		}
+		
+		.input:focus {
+		  border-color: #FFF200;
+		  outline: none;
+		}		
+
+		.btn {/* Botón intenso */
+		  width: 100%;
+		  margin-top: 1rem;
+		  padding: 0.8rem;
+		  border: none;
+		  border-radius: 0.5rem;
+		  background: var(--color-intenso);
+		  color: white;
+		  font-weight: 700;
+		  cursor: pointer;
+		}
+
+		.btn:hover {/* Cambio de color del btn al pasar el cursor*/
+		  background: #FFF200;
+		}
+		
+		.btn_g {/* Botón gris */
+		  width: 100%;
+		  margin-top: 1rem;
+		  padding: 0.8rem;
+		  border: none;
+		  border-radius: 0.5rem;
+		  background: #f5f5f5;
+		  color: black;
+		  font-weight: 700;
+		  cursor: pointer;
+		}	
+
+		.btn_g:hover {/* Cambio de color del btn al pasar el cursor*/
+		  background: #999999;
+		}		
+		
+		img {
+		  max-width: 100%;
+		  height: auto;
+		  display: block;
+		}
+				
+		/* Tabla responsive */
+		.tabla-wrapper {
+		  width: 100%;
+		  overflow-x: auto;
+		  margin-top: 1.5rem;
+		}
+
+		table {
+		  width: 100%;
+		  max-width: 420px;
+		  border-collapse: collapse;
+		}
+
+		th, td {
+		  border: 1px solid #ccc;
+		  padding: 0.5rem;
+		  text-align: center;
+		  font-size: 0.95rem;
+		}
+
+		th {
+		  background: var(--color-intenso);
+		  font-weight: 700;
+		}	
+		
+		.columnas {
+		  display: flex;
+		  gap: 1rem;
+		  justify-content: center;
+		}
+		
+		/* Media queries para móviles muy pequeños */
+		@media (max-width: 350px) {
+		  .marco {
+			padding: 1rem;
+		  }
+		  .marco h1 {
+			font-size: 1.5rem;
+		  }
+		  .marco input, .marco button {
+			font-size: 0.9rem;
+			padding: 0.6rem;
+		  }
+		}
+
+		/*Mensajes modales de aviso*/
+		.modal {
+		  position: fixed;
+		  inset: 0;
+		  background: rgba(0,0,0,0.6);
+		  display: flex;
+		  justify-content: center;
+		  align-items: center;
+		  z-index: 9999;
+		}
+
+		.modal.hidden {
+		  display: none;
+		}
+
+		.modal-box {
+		  background: white;
+		  padding: 1.5rem;
+		  border-radius: 1rem;
+		  width: 90%;
+		  max-width: 400px;
+		  text-align: center;
+		  box-shadow: 0 1rem 2rem rgba(0,0,0,0.3);
+		}
+
+		.modal-box h2 {
+		  color: var(--color-intenso);
+		  margin-bottom: 1rem;
+		}
+
+		.modal-box button {
+		  margin-top: 1rem;
+		  padding: 0.6rem 1.2rem;
+		  background: var(--color-intenso);
+		  color: white;
+		  border: none;
+		  border-radius: 0.5rem;
+		  font-weight: 700;
+		}	
+	</style>
+</head>
+
+<body>
+	
+	<div class="marcoblanco" id="marco_base" hidden=true>
+		<div class="bm" id="txt_equipo">EQUIPO</div>
+		<div class="bl">GATO</div>
+		<div class="bg">Los ratones están en algún lugar de esta zona:
+			<svg viewBox="0 0 300 300" style="width:100%; border:1px solid black">
+				<image href="Mapas\mapa.png" x="0" y="0" width="300" height="300" />
+				
+				<!-- Fil A -->
+				<!-- C1 -->
+				<rect id="AAA" x="0"  y="0"  width="50" height="50" opacity="0.0"/>
+				<rect id="AAB" x="50" y="0"  width="50" height="50" opacity="0.0"/>
+				<rect id="AAC" x="0"  y="50" width="50" height="50" opacity="0.0"/>
+				<rect id="AAD" x="50" y="50" width="50" height="50" opacity="0.0"/>
+
+				<!-- C2 -->
+				<rect id="ABA" x="100" y="0"   width="50" height="50" opacity="0.0"/>
+				<rect id="ABB" x="150" y="0"   width="50" height="50" opacity="0.0"/>
+				<rect id="ABC" x="100" y="50"  width="50" height="50" opacity="0.0"/>
+				<rect id="ABD" x="150" y="50"  width="50" height="50" opacity="0.0"/>
+
+				<!-- C3 -->
+				<rect id="ACA" x="200" y="0"  width="50" height="50" opacity="0.0"/>
+				<rect id="ACB" x="250" y="0"  width="50" height="50" opacity="0.0"/>
+				<rect id="ACC" x="200" y="50" width="50" height="50" opacity="0.0"/>
+				<rect id="ACD" x="250" y="50" width="50" height="50" opacity="0.0"/>	
+				
+				<!-- Fil B -->
+				<!-- C1 -->
+				<rect id="BAA" x="0"  y="100" width="50" height="50" opacity="0.0"/>
+				<rect id="BAB" x="50" y="100" width="50" height="50" opacity="0.0"/>
+				<rect id="BAC" x="0"  y="150" width="50" height="50" opacity="0.0"/>
+				<rect id="BAD" x="50" y="150" width="50" height="50" opacity="0.0"/>
+
+				<!-- C2 -->
+				<rect id="BBA" x="100" y="100" width="50" height="50" opacity="0.0"/>
+				<rect id="BBB" x="150" y="100" width="50" height="50" opacity="0.0"/>
+				<rect id="BBC" x="100" y="150" width="50" height="50" opacity="0.0"/>
+				<rect id="BBD" x="150" y="150" width="50" height="50" opacity="0.0"/>
+
+				<!-- C3 -->
+				<rect id="BCA" x="200" y="100" width="50" height="50" opacity="0.0"/>
+				<rect id="BCB" x="250" y="100" width="50" height="50" opacity="0.0"/>
+				<rect id="BCC" x="200" y="150" width="50" height="50" opacity="0.0"/>
+				<rect id="BCD" x="250" y="150" width="50" height="50" opacity="0.0"/>
+
+				<!-- Fil C -->
+				<!-- C1 -->
+				<rect id="CAA" x="0"  y="200"  width="50" height="50" opacity="0.0"/>
+				<rect id="CAB" x="50" y="200"  width="50" height="50" opacity="0.0"/>
+				<rect id="CAC" x="0"  y="250"  width="50" height="50" opacity="0.0"/>
+				<rect id="CAD" x="50" y="250"  width="50" height="50" opacity="0.0"/>
+
+				<!-- C2 -->
+				<rect id="CBA" x="100" y="200"  width="50" height="50" opacity="0.0"/>
+				<rect id="CBB" x="150" y="200"  width="50" height="50" opacity="0.0"/>
+				<rect id="CBC" x="100" y="250"  width="50" height="50" opacity="0.0"/>
+				<rect id="CBD" x="150" y="250"  width="50" height="50" opacity="0.0"/>
+
+				<!-- C3 -->
+				<rect id="CCA" x="200" y="200"  width="50" height="50" opacity="0.0"/>
+				<rect id="CCB" x="250" y="200"  width="50" height="50" opacity="0.0"/>
+				<rect id="CCC" x="200" y="250"  width="50" height="50" opacity="0.0"/>
+				<rect id="CCD" x="250" y="250"  width="50" height="50" opacity="0.0"/>				
+
+			</svg>
+		</div>
+		<div class="tm"></br>¿Les has encontrado?</div>
+		<div class = "columnas">
+			<div class="btn"  onclick="mostrar_color()" >¡Si!</div>
+			<div class="btn"  onclick="mostrar_prueba()" >No...</div>
+			<div class="btn"  onclick="resetear()" >Resetear</div>
+		</div>
+	</div>
+	
+	<div class="marcoblanco" id="marco_color" hidden=true>	
+		<div class="bm" id="txt_equipo">EQUIPO</div>
+		<div class="bl">GATO</div>
+		
+		<div class="t">¿Qué color llevan? (no falles, solo tenéis una oportunidad)</div>
+		<div class="btn_g" onclick = "seleccionar_color('ROJO')">Rojo</div>
+		<div class="btn_g" onclick = "seleccionar_color('AZUL')">Azul</div>
+		<div class="btn_g" onclick = "seleccionar_color('AMARILLO')">Amarillo</div>
+		<div class="btn_g" onclick = "seleccionar_color('VERDE')">Verde</div>
+		<div class="btn_g" onclick = "seleccionar_color('MORADO')">Morado</div>
+		<div class="btn_g" onclick = "seleccionar_color('BLANCO')">Blanco</div>
+		<div class="btn_g" onclick = "seleccionar_color('NEGRO')">Negro</div>
+		
+		<div class = "columnas">
+			<div class="btn" onclick="enviarColor()">Enviar</div>
+			<div class="btn"  onclick="ocultar_color()" >Retroceder</div>
+		</div>	
+	</div>
+	
+	<div class="marcoblanco" id="marco_prueba_1" hidden=true>
+		<div class="bm" id="txt_equipo">EQUIPO</div>
+		<div class="bl">GATO</div>
+		
+		<div class="tm">Para reducir la zona de búsqueda resuelve esta prueba:</div>
+		<img id="img_prueba_1" src="">
+		<div class="t" id = "txt_pregunta_1">Cargando...</div>
+		<div class="btn_g" id="btn_1A" onclick="ocultar_prueba('A')">A:</div>
+		<div class="btn_g" id="btn_1B" onclick="ocultar_prueba('B')">B:</div>
+		<div class="btn_g" id="btn_1C" onclick="ocultar_prueba('C')">C:</div>		
+		
+	</div>
+	
+	<div class="marcoblanco" id="marco_prueba_2" hidden=true>
+		<div class="bm" id="txt_equipo">EQUIPO</div>
+		<div class="bl">GATO</div>
+		
+		<div class="tm">Para reducir la zona de búsqueda resuelve esta prueba:</div>
+		<img id="img_prueba_2" src="">
+		<div class="t" id = "txt_pregunta_2">Cargando...</div>
+		<div class="btn_g" id="btn_2A" onclick="ocultar_prueba('A')">A:</div>
+		<div class="btn_g" id="btn_2B" onclick="ocultar_prueba('B')">B:</div>
+		<div class="btn_g" id="btn_2C" onclick="ocultar_prueba('C')">C:</div>	
+		
+	</div>
+	
+	<div class="marcoblanco" id="marco_prueba_3" hidden=true>
+		<div class="bm" id="txt_equipo">EQUIPO</div>
+		<div class="bl">GATO</div>
+		
+		<div class="tm">Para reducir la zona de búsqueda resuelve esta prueba:</div>
+		<img id="img_prueba_3" src="">
+		<div class="t" id = "txt_pregunta_3">Cargando...</div>
+		<div class = "columnas">
+			<div class="btn_g" id = "btn_3A"  onclick="ocultar_prueba('A')">A:</div>
+			<div class="btn_g" id = "btn_3B"  onclick="ocultar_prueba('B')">B:</div>
+		</div>
+		<div class = "columnas">
+			<div class="btn_g" id = "btn_3C" onclick="ocultar_prueba('C')">C:</div>
+			<div class="btn_g" id = "btn_3D" onclick="ocultar_prueba('D')">D:</div>
+		</div>	
+		
+	</div>
+	
+	<!-- MODAL -->
+	<div id="modal" class="modal hidden">
+	  <div class="modal-box">
+		<h2 id="modal-title">Aviso</h2>
+		<p id="modal-text"></p>
+		<button onclick="cerrarModal()">Aceptar</button>
+	  </div>
+	</div>
+	
+	<script> //GESTION DE PANELES
+	
+		function mostrar_color() {
+			document.getElementById('marco_base').hidden = true;
+			document.getElementById('marco_color').hidden = false;
+		}	
+		function ocultar_color() {
+			document.getElementById('marco_base').hidden = false;
+			document.getElementById('marco_color').hidden = true;
+		}
+		function mostrar_prueba() {
+			if (area.length === 3) {
+				comprobarHuida()
+			}
+			else if (area.length === 2) {
+				document.getElementById('marco_base').hidden = true;
+				document.getElementById('marco_prueba_3').hidden = false;
+				
+				prueba = data.zonas[area]
+				
+				document.getElementById('img_prueba_3').src="Mapas/"+ prueba.ruta
+				document.getElementById('txt_pregunta_3').textContent = prueba.pregunta
+				document.getElementById('btn_3A').textContent = prueba.respA
+				document.getElementById('btn_3B').textContent = prueba.respB
+				document.getElementById('btn_3C').textContent = prueba.respC
+				document.getElementById('btn_3D').textContent = prueba.respC
+								
+			}
+			else if (area.length === 1) {
+				document.getElementById('marco_base').hidden = true;
+				document.getElementById('marco_prueba_2').hidden = false;
+
+				prueba = data.zonas[area]
+				
+				document.getElementById('img_prueba_2').src="Mapas/"+ prueba.ruta
+				document.getElementById('txt_pregunta_2').textContent = prueba.pregunta
+				document.getElementById('btn_2A').textContent = prueba.respA
+				document.getElementById('btn_2B').textContent = prueba.respB
+				document.getElementById('btn_2C').textContent = prueba.respC
+			}
+			else {
+				document.getElementById('marco_base').hidden = true;
+				document.getElementById('marco_prueba_1').hidden = false;			
+			}
+		}	
+		function ocultar_prueba(respuesta) {
+			document.getElementById('marco_base').hidden = false;
+			document.getElementById('marco_prueba_' + (area.length+1).toString()).hidden = true;
+			
+			area = area + respuesta
+			
+			//Mostramos/ocultamos areas
+			const rects = document.querySelectorAll("svg rect");
+			rects.forEach(rect => {
+			  const id = rect.id;
+
+			  if (id.startsWith(area)) {
+				rect.style.opacity = "0"; // visible
+			  } else {
+				rect.style.opacity = "0.5"; // tapado
+			  }
+			});
+			
+		}	
+	
+	</script>
+	<script> //MODALES
+		function mostrarModal(texto, titulo = 'Aviso') {
+			document.getElementById('modal-title').textContent = titulo;
+			document.getElementById('modal-text').textContent = texto;
+			document.getElementById('modal').classList.remove('hidden');
+		}
+
+		function cerrarModal() {
+			document.getElementById('modal').classList.add('hidden');
+			
+			//Si había un destino guardado, redirigimos
+			if (window.destino) {window.location.href = window.destino;}
+		}	
+	</script>
+	<script> //BBDD
+		async function consultarRatonera() {
+			
+			const res = await fetch("https://script.google.com/macros/s/AKfycbxG0-TddGcYraqw7FaVklnnSTw6Z-GMh0D7FX5F7WEsHbztk6i118RLJbj0SXA3RYb0vA/exec", {
+				method: "POST",
+				body: new URLSearchParams({
+					func: "consultarRatonera",
+					equipo: equipo
+				})
+			});	
+			
+			const data = await res.json();
+			if (data.mensaje !== "") {
+				window.destino = data.rol + ".html"
+				mostrarModal(data.mensaje)
+				return;
+			}
+
+			sessionStorage.setItem('numRatonera', data.numRatonera);
+			numRatonera = sessionStorage.getItem('numRatonera');
+			
+			///Prueba1
+			prueba = data.zonas[""]
+
+			document.getElementById('img_prueba_1').src="Mapas/"+ prueba.ruta
+			document.getElementById('txt_pregunta_1').textContent = prueba.pregunta
+			document.getElementById('btn_1A').textContent = prueba.respA
+			document.getElementById('btn_1B').textContent = prueba.respB
+			document.getElementById('btn_1C').textContent = prueba.respC
+
+			//Una vez cargados los datos, mostramos el panel base
+			document.getElementById('marco_base').hidden = false;
+			
+			return data
+			
+		}		
+	
+		async function enviarColor() {
+		
+			const color = sessionStorage.getItem('color');
+			
+			if (color === "") {
+				mostrarModal("Debes seleccionar un color.")
+				return;
+			}
+			
+			const res = await fetch("https://script.google.com/macros/s/AKfycbxG0-TddGcYraqw7FaVklnnSTw6Z-GMh0D7FX5F7WEsHbztk6i118RLJbj0SXA3RYb0vA/exec", {
+				method: "POST",
+				body: new URLSearchParams({
+					func: "enviarColor",
+					equipo: equipo,
+					jugado: jugador,
+					color: color
+				})
+			});		
+			const data = await res.json();
+			
+			//Recuperaremos el mensaje (q les dice si son ratones o siguen de gatos y si han ganado o no) y la url de redireccionamiento (raton o gato).
+			if (data.mensaje !== "") {
+				window.destino = data.rol + ".html"
+				mostrarModal(data.mensaje)
+				return;
+			}
+			
+		}
+		
+		async function comprobarHuida() {
+			
+			const res = await fetch("https://script.google.com/macros/s/AKfycbxG0-TddGcYraqw7FaVklnnSTw6Z-GMh0D7FX5F7WEsHbztk6i118RLJbj0SXA3RYb0vA/exec", {
+				method: "POST",
+				body: new URLSearchParams({
+					func: "comprobarHuida",
+					equipo: equipo,
+					numRatonera: numRatonera
+				})
+			});		
+			const data = await res.json();
+			
+			//Recuperaremos el mensaje (q les dice si son ratones o siguen de gatos y si han ganado o no) y la url de redireccionamiento (raton o gato).
+			if (data.huida === 1) {
+				window.destino = "gato.html" //Para recargar la nueva ratonera
+				mostrarModal(data.mensaje)
+			}
+			else {
+				mostrarModal(data.mensaje)
+			}
+			
+		}		
+	
+	</script>
+	<script> //FUNCIONES LOCALES
+		function seleccionar_color(color){
+			sessionStorage.setItem('color', color);
+		}
+		function resetear() {
+			area = ""
+			
+			const rects = document.querySelectorAll("svg rect");
+			rects.forEach(rect => {
+				rect.style.opacity = "0"; // visible
+			});			
+		}
+	</script>
+	<script> //MAIN
+		async function main() {
+			
+			//ALMACEN
+			equipo = sessionStorage.getItem('equipo');
+			if (equipo === "NARANJA") {
+				document.documentElement.style.setProperty("--color-intenso", "#FF7F27");
+				document.documentElement.style.setProperty("--color-suave", "#F1BA72");
+			}
+			else {
+				document.documentElement.style.setProperty("--color-intenso", "#22B14C");
+				document.documentElement.style.setProperty("--color-suave", "#9EF7B3");
+			}
+			
+			document.getElementById('txt_equipo').textContent = "Equipo " + equipo;
+			
+			jugador = sessionStorage.getItem('jugador');
+			area = ""
+			numRatonera = 0
+			sessionStorage.setItem('color', '');
+			
+			//PINTAR FORM
+			data = await consultarRatonera();
+
+		}
+		main();
+
+	</script>	
+
+
+</body>
+</html>

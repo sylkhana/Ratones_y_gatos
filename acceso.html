@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Gymkhana Ratones y Gatos - Login</title>
+	<title>Gymkhana Ratones y Gatos - Acceso</title>
 	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 	<style>
 		* {
@@ -14,7 +14,7 @@
 
 		body {
 		  font-family: 'Roboto', sans-serif;
-		  background: linear-gradient(to right, #6a11cb, #A119CB);
+		  background: linear-gradient(to right, #FF7F27, #22B14C);
 		  min-height: 100vh;
 		  display: flex;
 		  justify-content: center;
@@ -33,7 +33,7 @@
 		}
 
 		.marco h1 {
-		  color: #A119CB;
+		  color: #FF7F27;
 		  font-size: 2rem;
 		  margin-bottom: 1.5rem;
 		}
@@ -49,7 +49,7 @@
 		}
 
 		.marco input:focus {
-		  border-color: #A119CB;
+		  border-color: #FFF200;
 		  outline: none;
 		}
 
@@ -60,14 +60,14 @@
 		  font-weight: 700;
 		  border: none;
 		  border-radius: 0.5rem;
-		  background: #A119CB;
+		  background: #22B14C;
 		  color: #fff;
 		  cursor: pointer;
 		  transition: background 0.3s;
 		}
 
 		.marco button:hover {
-		  background: #6a11cb;
+		  background: #FFF200;
 		}
 
 		/* Media queries para móviles muy pequeños */
@@ -129,19 +129,15 @@
 
 <body>
 
+	<!-- DISEÑO FORM BASE -->
 	<div class="marco">
-	  <h1>Acceso</h1>
-
-	  <!-- ELEMENTOS VINGULADOS A GS POST -->
-	  <form method="POST" action="https://script.google.com/macros/s/AKfycbxG0-TddGcYraqw7FaVklnnSTw6Z-GMh0D7FX5F7WEsHbztk6i118RLJbj0SXA3RYb0vA/exec">
-		<input type="hidden" name="func" value="entrar">
-	    <input type="text" id="jugador" name="jugador" placeholder="Jugador" required>
+		<h1>Acceso</h1> 
+		<input type="text" id="jugador" name="jugador" placeholder="Jugador" required>
 		<input type="password" id="clave" name="clave" placeholder="Código" required>
-		<button type="submit">Entrar</button>
-	  </form>
+		<button onclick="entrar()">Entrar</button>
 	</div>
 
-	<!-- MODAL -->
+	<!-- DISEÑO MODAL -->
 	<div id="modal" class="modal hidden">
 	  <div class="modal-box">
 		<h2 id="modal-title">Aviso</h2>
@@ -150,12 +146,44 @@
 	  </div>
 	</div>
 
-	<form method="POST" action="TU_SCRIPT_URL">
 
+	<script> 
+		//ENTRAR
+		async function entrar() {
+		
+			const jugador = document.getElementById('jugador').value;
+			const clave = document.getElementById('clave').value;
 
-	<script> //MODAL
+			const res = await fetch("https://script.google.com/macros/s/AKfycbxG0-TddGcYraqw7FaVklnnSTw6Z-GMh0D7FX5F7WEsHbztk6i118RLJbj0SXA3RYb0vA/exec", {
+				method: "POST",
+				body: new URLSearchParams({
+					func: "entrar",
+					jugador: jugador,
+					clave: clave
+				})
+			});
+			const data = await res.json();
+			
+			if (data.jugador === '') {
+				mostrarModal("Credenciales incorrectas");
+			} 
+			else {
+				sessionStorage.setItem("jugador", data.jugador);
+				sessionStorage.setItem("equipo", data.equipo);
+				
+				if (data.rol === "RATON") {
+					window.location.href = "raton.html";
+				}
+				else {
+					window.location.href = "gato.html";
+				}
+				
+			}
+		}
+		
+		
+		//MODAL
 		function mostrarModal(texto, titulo = 'Aviso') {
-			console.log(texto);
 			document.getElementById('modal-title').textContent = titulo;
 			document.getElementById('modal-text').textContent = texto;
 			document.getElementById('modal').classList.remove('hidden');
@@ -163,17 +191,15 @@
 
 		function cerrarModal() {
 		  document.getElementById('modal').classList.add('hidden');
-		  console.log('Redireccionando')
-		  window.open("https://sylkhana.github.io/Ratones_y_gatos/acceso.html", "_top");
 		}
-	</script>
 	
-	<script>
+		//ERROR LOGIN
 		const params = new URLSearchParams(window.location.search);
 
 		if (params.get("error")) {
 		  mostrarModal("Credenciales incorrectas");
 		}
 	</script>
+
 </body>
 </html>
