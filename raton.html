@@ -320,7 +320,7 @@
 				mostrarModal(data.mensaje)
 				window.destino = "gato.html";
 			} 
-			else  if (data.ratonera !== "0") {
+			else  if (data.ratonera && data.ratonera !== "0") {
 				//Redirigimos directamente a quesito o trampa segun estado del bloqueo
 				window.destino = (data.desbloqueado === "0") ? "trampa.html" : "quesito.html";					
 			}
