@@ -20,7 +20,7 @@
 
 		body {
 			  font-family: 'Roboto', sans-serif;
-			  background: linear-gradient(to right, #6a11cb, #A119CB);
+			  background: linear-gradient(to right, #FF7F27, #22B14C);
 			  min-height: 100vh;
 			  display: flex;
 			  justify-content: center;
@@ -218,6 +218,18 @@
 		</div>
 	</div>
 	
+	<script> //Main
+		//Recuperamos datos del almacen
+		const equipo = sessionStorage.getItem('equipo');
+		if (equipo === "NARANJA") {
+			document.documentElement.style.setProperty("--color-intenso", "#FF7F27");
+			document.documentElement.style.setProperty("--color-suave", "#F1BA72");
+		}
+		else {	
+			document.documentElement.style.setProperty("--color-intenso", "#22B14C");
+			document.documentElement.style.setProperty("--color-suave", "#9EF7B3");
+		}		
+	</script>
 	<script> //BBDD
 		async function consultarQuesito()  {
 			const res = await fetch("https://script.google.com/macros/s/AKfycbxG0-TddGcYraqw7FaVklnnSTw6Z-GMh0D7FX5F7WEsHbztk6i118RLJbj0SXA3RYb0vA/exec", {
