@@ -464,7 +464,7 @@
 			
 			const data = await res.json();
 			if (data.mensaje !== "") {
-				window.destino = data.rol + ".html"
+				window.destino = data.rol.toLowerCase() + ".html"
 				mostrarModal(data.mensaje)
 				return;
 			}
@@ -510,7 +510,7 @@
 			
 			//Recuperaremos el mensaje (q les dice si son ratones o siguen de gatos y si han ganado o no) y la url de redireccionamiento (raton o gato).
 			if (data.mensaje !== "") {
-				window.destino = data.rol + ".html"
+				window.destino = data.rol.toLowerCase() + ".html"
 				mostrarModal(data.mensaje)
 				return;
 			}
