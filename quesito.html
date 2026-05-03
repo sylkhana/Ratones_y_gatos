@@ -282,7 +282,7 @@
 				if (data.mensaje !== ""){
 					//guardar destino para después de cerrar el modal (si el quesito está bloqueado, trampa.html y, si no, quesito.html
 					window.destino = (data.desbloqueado === "0") ? "trampa.html" : "quesito.html";
-					
+					console.log(data.mensaje)
 					mostrarModal(data.mensaje)
 				}
 				else {
