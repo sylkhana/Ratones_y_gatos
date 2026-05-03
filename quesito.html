@@ -305,7 +305,7 @@
 		async function huir() {
 		
 			//CONFIRMACION
-			const ok = await mostrarConfirmacion("¿Seguro?");
+			const ok = await mostrarConfirmacion("¿Seguro que quieres abandonar la ratonera?");
 			
 			if (ok) {
 				//DESACTIVAR TRAMPA
@@ -318,8 +318,7 @@
 						ratonera: ratonera
 					})
 				});		
-				const data = await res.json();				
-
+				const data = await res.json();
 				//Comprobamos a donde hay que redireccionar
 				window.destino = data.rol + ".html";
 				
