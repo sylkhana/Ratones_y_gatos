@@ -217,19 +217,7 @@
 			<div class="btn" id = "btn_huir" onclick="huir()">Huir</div>
 		</div>
 	</div>
-	
-	<script> //Main
-		//Recuperamos datos del almacen
-		const equipo = sessionStorage.getItem('equipo');
-		if (equipo === "NARANJA") {
-			document.documentElement.style.setProperty("--color-intenso", "#FF7F27");
-			document.documentElement.style.setProperty("--color-suave", "#F1BA72");
-		}
-		else {	
-			document.documentElement.style.setProperty("--color-intenso", "#22B14C");
-			document.documentElement.style.setProperty("--color-suave", "#9EF7B3");
-		}		
-	</script>
+		
 	<script> //BBDD
 		async function consultarQuesito()  {
 			const res = await fetch("https://script.google.com/macros/s/AKfycbxG0-TddGcYraqw7FaVklnnSTw6Z-GMh0D7FX5F7WEsHbztk6i118RLJbj0SXA3RYb0vA/exec", {
@@ -370,14 +358,14 @@
 		//Estableceer la imagen de la prueba del quesito
 		const img_prueba = document.getElementById('img_prueba');
 		extension = ".png"
-		if (ratonera[1]) == "4" {
+		if (ratonera[1] === "4") {
 			extension = ".gif"
 		}
 		img_prueba.src = 'Quesitos/R' + ratonera[1] +'Q' + quesito.toString() + extension;
 		
 		//Obtener la info del quesito
 		consultarQuesito();
-	</script>	
+	</script>
 
 
 </body>
