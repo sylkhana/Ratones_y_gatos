@@ -313,8 +313,8 @@
 		<div class="btn_g" onclick = "seleccionar_color('NEGRO')">Negro</div>
 		
 		<div class = "columnas">
-			<div class="btn" onclick="enviarColor()">Enviar</div>
 			<div class="btn"  onclick="ocultar_color()" >Retroceder</div>
+			<div class="btn" onclick="enviarColor()">Enviar</div>
 		</div>	
 	</div>
 	
@@ -496,13 +496,13 @@
 				mostrarModal("Debes seleccionar un color.")
 				return;
 			}
-			
+			console.log(jugador)
 			const res = await fetch("https://script.google.com/macros/s/AKfycbxG0-TddGcYraqw7FaVklnnSTw6Z-GMh0D7FX5F7WEsHbztk6i118RLJbj0SXA3RYb0vA/exec", {
 				method: "POST",
 				body: new URLSearchParams({
 					func: "enviarColor",
 					equipo: equipo,
-					jugado: jugador,
+					jugador: jugador,
 					color: color
 				})
 			});		
