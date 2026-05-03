@@ -320,7 +320,7 @@
 				});		
 				const data = await res.json();
 				//Comprobamos a donde hay que redireccionar
-				window.destino = data.rol + ".html";
+				window.destino = data.rol.toLowerCase() + ".html";
 				
 				//Redireccionamos, pasando antes por el modal, si corressponde
 				if (data.mensaje !== ""){
